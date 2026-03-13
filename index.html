@@ -42,7 +42,7 @@
                 ]
             },
             {
-                text: '【團隊情境】準備發想新版教科書的行銷企劃時，你更傾向哪種參與方式？',
+                text: '準備發想新版教科書的行銷企劃時，你更傾向哪種參與方式？',
                 options: [
                     { text: '跟大家在會議室熱烈討論，一邊交流一邊激發新點子。', value: 'E' },
                     { text: '先自己蒐集資料、整理好草案，再有條理地向大家報告。', value: 'I' }
@@ -70,7 +70,7 @@
                 ]
             },
             {
-                text: '【出版情境】如果有位合作的作者因為截稿壓力而情緒低落，你會怎麼協助他？',
+                text: '如果有位合作的作者因為截稿壓力而情緒低落，你會怎麼協助他？',
                 options: [
                     { text: '幫他重新梳理時程表，找出可以優化進度、解決卡關的具體方法。', value: 'T' },
                     { text: '先傾聽他的壓力並給予同理與鼓勵，讓他心情平復後再討論進度。', value: 'F' }
@@ -84,7 +84,7 @@
                 ]
             },
             {
-                text: '【產品情境】距離新教材上線還有一段時間，大綱已經定案了，你的工作狀態是？',
+                text: '距離新教材上線還有一段時間，大綱已經定案了，你的工作狀態是？',
                 options: [
                     { text: '依照原本排定的時程表按部就班完成，不喜歡臨時發生大改動。', value: 'J' },
                     { text: '保持彈性，如果突然有更好的靈感或市場回饋，隨時準備調整方向。', value: 'P' }
@@ -138,21 +138,6 @@
                 </svg>
             );
         };
-
-        const CompanyLogo = () => (
-            <div className="flex justify-center mb-6 mt-4 px-4">
-                <img 
-                    src="./LOGO.svg" 
-                    alt="龍騰文化" 
-                    className="h-10 w-auto object-contain"
-                    onError={(e) => { 
-                        if(!e.target.src.includes('img/LOGO.svg')) {
-                            e.target.src = './img/LOGO.svg';
-                        }
-                    }} 
-                />
-            </div>
-        );
 
         function App() {
             const [view, setView] = useState('form'); 
@@ -224,14 +209,20 @@
             };
 
             const renderForm = () => (
-                <div className="max-w-md mx-auto w-full bg-white rounded-3xl shadow-2xl overflow-hidden animate-fade-in border-t-8 border-[#c92e27]">
-                    <CompanyLogo />
-                    <div className="px-8 pb-4 text-center">
-                        <h1 className="text-2xl font-black text-gray-800 tracking-tight">職涯性格探索</h1>
-                        <p className="text-gray-500 text-sm mt-2">找出隱藏的職場潛力，預見未來更好的自己</p>
-                    </div>
+                <div className="w-full bg-white lg:rounded-3xl shadow-none lg:shadow-2xl overflow-hidden animate-fade-in border-t-0 lg:border-t-8 border-[#c92e27]">
+                    <img 
+                        src="./img/main_banner.jpg" 
+                        alt="龍騰文化 職涯性格探索" 
+                        className="w-full h-auto max-h-[40vh] md:max-h-[50vh] lg:max-h-[40vh] object-cover block"
+                        onError={(e) => { 
+                            if(!e.target.src.includes('placehold.co')) {
+                                e.target.src = 'https://placehold.co/1080x720/c92e27/ffffff?text=主要Banner圖片';
+                            }
+                        }} 
+                    />
                     
-                    <form onSubmit={handleStartQuiz} className="p-8 space-y-6">
+                    {/* 💡 iPad 上給予更寬裕的 padding */}
+                    <form onSubmit={handleStartQuiz} className="p-8 md:p-12 lg:p-8 space-y-6">
                         <div className="space-y-4">
                             <div className="relative">
                                 <Icon name="user" className="absolute left-4 top-4 text-gray-400 w-5 h-5" />
@@ -247,9 +238,8 @@
                             </div>
                         </div>
 
-                        {/* 🌟 個人資料保護聲明 🌟 */}
                         <div className="px-1 py-2">
-                            <p className="text-[10px] text-gray-400 leading-relaxed text-center">
+                            <p className="text-[10px] text-gray-400 leading-relaxed text-left">
                                 本測驗蒐集之資料僅供龍騰文化事業股份有限公司人力資源部進行招募聯繫與內部統計使用，我們承諾尊重您的隱私且不將資料用於他途。點擊「開始探索」即代表您同意上述條款。
                             </p>
                         </div>
@@ -266,15 +256,15 @@
                 const progress = ((currentQuestionIdx + 1) / quizQuestions.length) * 100;
 
                 return (
-                    <div className="max-w-md mx-auto w-full bg-white rounded-3xl shadow-2xl overflow-hidden animate-fade-in border-t-8 border-[#c92e27] pb-8">
-                        <div className="px-8 pt-8 pb-4">
+                    <div className="w-full bg-white lg:rounded-3xl shadow-none lg:shadow-2xl overflow-hidden animate-fade-in border-t-0 lg:border-t-8 border-[#c92e27] pb-8 md:pb-12 lg:pb-8">
+                        <div className="px-8 md:px-12 lg:px-8 pt-8 md:pt-12 lg:pt-8 pb-4">
                             <div className="w-full bg-gray-100 rounded-full h-2 mb-6">
                                 <div className="bg-[#c92e27] h-2 rounded-full transition-all duration-300" style={{ width: `${progress}%` }}></div>
                             </div>
                             <div className="text-[#c92e27] font-black tracking-widest text-sm mb-4">
                                 QUESTION {currentQuestionIdx + 1} / {quizQuestions.length}
                             </div>
-                            <h2 className="text-2xl font-bold text-gray-800 leading-snug mb-8 min-h-[80px]">
+                            <h2 className="text-2xl md:text-3xl lg:text-2xl font-bold text-gray-800 leading-snug mb-8 min-h-[80px]">
                                 {question.text}
                             </h2>
                             
@@ -284,7 +274,7 @@
                                         key={idx}
                                         onClick={() => handleOptionClick(option.value)}
                                         disabled={loading}
-                                        className="w-full text-left p-5 rounded-2xl border-2 border-gray-100 hover:border-[#c92e27] hover:bg-red-50 text-gray-700 font-medium transition-all transform active:scale-95 shadow-sm animate-slide-up"
+                                        className="w-full text-left p-5 md:p-6 lg:p-5 rounded-2xl border-2 border-gray-100 hover:border-[#c92e27] hover:bg-red-50 text-gray-700 font-medium md:text-lg lg:text-base transition-all transform active:scale-95 shadow-sm animate-slide-up"
                                         style={{ animationDelay: `${idx * 0.1}s` }}
                                     >
                                         {option.text}
@@ -305,62 +295,30 @@
             const renderResult = () => {
                 const result = mbtiData[formData.mbti] || mbtiData['INTJ'];
                 return (
-                    <div className="max-w-md mx-auto w-full bg-white rounded-3xl shadow-2xl overflow-hidden animate-fade-in border-t-8 border-[#c92e27]">
-                        <div className="p-8 text-center">
-                            <div className="relative inline-block group">
-                                <img src={result.imageUrl} alt={formData.mbti} 
-                                     onError={(e) => { e.target.src = 'https://placehold.co/600x600/c92e27/ffffff?text=' + formData.mbti }}
-                                     className="w-56 h-56 mx-auto rounded-3xl shadow-xl object-cover border-4 border-white transform transition duration-500" />
-                            </div>
-                            
-                            <h2 className="text-3xl font-black text-gray-800 mt-10 mb-2">{result.title}</h2>
-                            <div className="bg-red-50 p-6 rounded-2xl mb-10 border border-red-100 italic text-gray-700 leading-relaxed text-sm">
-                                「{result.desc}」
-                            </div>
+                    <div className="w-full bg-white lg:rounded-3xl shadow-none lg:shadow-2xl overflow-hidden animate-fade-in">
+                        
+                        {/* 💡 放寬高度限制：移除 70vh 限制，讓 3:4 的圖片在 iPad 上能完美自然延展 */}
+                        <img src={result.imageUrl} alt={formData.mbti} 
+                             onError={(e) => { 
+                                 if(!e.target.src.includes('placehold.co')) {
+                                     e.target.src = 'https://placehold.co/1080x1440/c92e27/ffffff?text=' + formData.mbti + '+專屬結果卡';
+                                 }
+                             }}
+                             className="w-full h-auto max-h-[85vh] lg:max-h-[75vh] object-contain bg-white block mx-auto" />
+                        
+                        {/* 💡 底部按鈕區 */}
+                        <div className="p-6 md:p-10 lg:p-8 space-y-4 bg-white border-t lg:border-t-0 border-gray-50">
+                            <a 
+                                href="https://www.104.com.tw/company/au6siqw" 
+                                target="_blank" 
+                                rel="noopener noreferrer"
+                                className="w-full inline-flex items-center justify-center gap-2 bg-[#c92e27] hover:bg-[#a8251f] text-white font-bold py-4 px-4 rounded-xl shadow-md transition-all transform active:scale-95 text-lg tracking-wide"
+                            >
+                                歡迎加入我們 <Icon name="external" className="w-5 h-5 opacity-70" />
+                            </a>
 
-                            <div className="space-y-5 text-left mb-10 px-2">
-                                <h4 className="font-bold text-gray-800 flex items-center gap-2 text-xl mb-4 border-b-2 border-gray-100 pb-2">
-                                    <Icon name="briefcase" className="text-[#c92e27] w-6 h-6 flex-shrink-0" /> 
-                                    龍騰推薦職缺
-                                </h4>
-                                
-                                <div className="relative">
-                                    <div className="flex overflow-x-auto snap-x snap-mandatory gap-4 pb-4 hide-scrollbar px-1">
-                                        {result.jobs.map((job, i) => (
-                                            <div key={i} className="flex-none w-[85%] snap-center bg-white p-6 rounded-2xl border-2 border-gray-100 shadow-md transition-all text-left flex flex-col justify-start">
-                                                <div className="flex items-center gap-2 mb-3">
-                                                    <Icon name="check" className="w-5 h-5 text-[#c92e27] flex-shrink-0" />
-                                                    <span className="font-black text-xl text-gray-800 tracking-tight">{job}</span>
-                                                </div>
-                                                <p className="text-sm text-gray-600 leading-relaxed">
-                                                    {jobDescriptions[job]}
-                                                </p>
-                                            </div>
-                                        ))}
-                                    </div>
-                                    {result.jobs.length > 1 && (
-                                        <div className="flex items-center justify-center gap-2 mt-1 text-gray-400 text-xs animate-pulse">
-                                            <Icon name="arrowLeft" className="w-3 h-3" />
-                                            <span>左右滑動查看更多</span>
-                                            <Icon name="arrowLeft" className="w-3 h-3 transform rotate-180" />
-                                        </div>
-                                    )}
-                                </div>
-                            </div>
-
-                            <div className="px-10 mb-6">
-                                <a 
-                                    href="https://www.104.com.tw/company/au6siqw" 
-                                    target="_blank" 
-                                    rel="noopener noreferrer"
-                                    className="w-full inline-flex items-center justify-center gap-2 bg-[#c92e27] hover:bg-[#a8251f] text-white font-bold py-3 px-4 rounded-xl shadow-md transition-all transform active:scale-95 text-base"
-                                >
-                                    歡迎加入我們 <Icon name="external" className="w-4 h-4 opacity-70" />
-                                </a>
-                            </div>
-
-                            <button onClick={handleReset} className="flex items-center justify-center w-full gap-2 text-gray-400 hover:text-gray-600 font-medium transition py-2 text-sm">
-                                <Icon name="arrowLeft" className="w-3 h-3" /> 再玩一次
+                            <button onClick={handleReset} className="flex items-center justify-center w-full gap-2 text-gray-400 hover:text-gray-600 font-medium transition py-3 text-base">
+                                <Icon name="arrowLeft" className="w-4 h-4" /> 再玩一次
                             </button>
                         </div>
                     </div>
@@ -368,21 +326,26 @@
             };
 
             return (
-                <div className="min-h-[100dvh] bg-[#f3f4f6] py-8 md:py-12 px-4 font-sans flex flex-col justify-center items-center">
+                // 💡 只有 lg (1024px, 電腦版) 才會顯示灰底，手機與 iPad 皆為白底滿版
+                <div className="min-h-[100dvh] bg-white lg:bg-[#f3f4f6] font-sans flex flex-col">
                     {message && (
                         <div className="fixed top-4 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white px-6 py-3 rounded-full z-50 animate-fade-in shadow-xl text-sm font-bold">
                             {message}
                         </div>
                     )}
                     
-                    <div className="w-full max-w-md">
-                        {view === 'form' && renderForm()}
-                        {view === 'quiz' && renderQuiz()}
-                        {view === 'result' && renderResult()}
-                        
-                        <div className="mt-8 text-center pb-8">
-                            <p className="text-xs text-gray-400 mb-2">2026 龍騰文化事業股份有限公司 © 版權所有</p>
+                    {/* 💡 放寬 iPad 的尺寸限制：在 md 尺寸下放到 max-w-2xl(672px)，lg 尺寸收斂為 max-w-md(448px) */}
+                    <div className="flex-grow flex flex-col justify-center items-center w-full px-0 lg:px-6 py-0 lg:py-12">
+                        <div className="w-full max-w-md md:max-w-2xl lg:max-w-md my-auto">
+                            {view === 'form' && renderForm()}
+                            {view === 'quiz' && renderQuiz()}
+                            {view === 'result' && renderResult()}
                         </div>
+                    </div>
+                    
+                    {/* 頁尾 */}
+                    <div className="w-full text-center pb-6 pt-4 bg-white lg:bg-transparent">
+                        <p className="text-xs text-gray-400">2026 龍騰文化事業股份有限公司 © 版權所有</p>
                     </div>
                 </div>
             );
