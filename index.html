@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>龍騰文化 - 職涯潛力探索</title>
-    <!-- 引入 Tailwind CSS 與 React -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
@@ -209,7 +208,7 @@
             };
 
             const renderForm = () => (
-                <div className="w-full bg-white lg:rounded-3xl shadow-none lg:shadow-2xl overflow-hidden animate-fade-in border-t-0 lg:border-t-8 border-[#c92e27]">
+                <div className="w-full bg-white lg:rounded-3xl shadow-none lg:shadow-2xl overflow-hidden animate-fade-in">
                     <img 
                         src="./img/main_banner.jpg" 
                         alt="龍騰文化 職涯性格探索" 
@@ -256,7 +255,7 @@
                 const progress = ((currentQuestionIdx + 1) / quizQuestions.length) * 100;
 
                 return (
-                    <div className="w-full bg-white lg:rounded-3xl shadow-none lg:shadow-2xl overflow-hidden animate-fade-in border-t-0 lg:border-t-8 border-[#c92e27] pb-8 md:pb-12 lg:pb-8">
+                    <div className="w-full bg-white lg:rounded-3xl shadow-none lg:shadow-2xl overflow-hidden animate-fade-in pb-8 md:pb-12 lg:pb-8">
                         <div className="px-8 md:px-12 lg:px-8 pt-8 md:pt-12 lg:pt-8 pb-4">
                             <div className="w-full bg-gray-100 rounded-full h-2 mb-6">
                                 <div className="bg-[#c92e27] h-2 rounded-full transition-all duration-300" style={{ width: `${progress}%` }}></div>
