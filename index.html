@@ -21,6 +21,18 @@
         /* 隱藏捲軸但保留滑動功能 */
         .hide-scrollbar::-webkit-scrollbar { display: none; }
         .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* 🌟 新增：夾娃娃機擺盪動畫 🌟 */
+        @keyframes gentle-swing {
+            0%, 100% { transform: rotate(-3deg); }
+            50% { transform: rotate(3deg); }
+        }
+        .animate-swing {
+            /* 動畫名稱 | 時間 | 緩和曲線 | 無限循環 */
+            animation: gentle-swing 4s ease-in-out infinite;
+            /* 旋轉軸心設定在圖片寬度約 75%、高度 0% (頂部) 的位置，符合鋼纜吊掛的感覺 */
+            transform-origin: 75% 0%; 
+        }
     </style>
 </head>
 <body>
@@ -32,7 +44,7 @@
         // --- 🌟 Google Sheets 接收端網址 🌟 ---
         const GOOGLE_SHEET_URL = "https://script.google.com/macros/s/AKfycbyuORP37J-dRdXe8OSb2OJaoiPA9ByjI_4r7tJ34H1_MdJQNQcR-p5Fie1xVBcspwmptQ/exec";
 
-        // --- 🌟 測驗題目設定 (共8題，含出版/教科書情境) 🌟 ---
+        // --- 🌟 測驗題目設定 🌟 ---
         const quizQuestions = [
             {
                 text: '忙碌了一整週，終於迎來週末，你通常喜歡怎麼度過？',
@@ -210,23 +222,27 @@
 
             const renderForm = () => (
                 <div className="w-full bg-white lg:rounded-3xl shadow-none lg:shadow-2xl overflow-hidden animate-fade-in border-t-0 lg:border-t-8 border-[#c92e27]">
-                    <img 
-                        src="./img/main_banner.jpg" 
-                        alt="龍騰文化 職涯性格探索" 
-                        className="w-full h-auto max-h-[40vh] md:max-h-[50vh] lg:max-h-[40vh] object-cover block"
-                        onError={(e) => { 
-                            if(!e.target.src.includes('placehold.co')) {
-                                e.target.src = 'https://placehold.co/1080x720/c92e27/ffffff?text=主要Banner圖片';
-                            }
-                        }} 
-                    />
                     
-                    {/* 💡 iPad 上給予更寬裕的 padding */}
+                    {/* 🌟 疊加式動畫主視覺區塊 🌟 */}
+                    <div className="relative w-full overflow-hidden bg-[#faf7ec]">
+                        {/* 1. 背景層 (決定整體比例與高度) */}
+                        <img src="./img/mainbanner.png" alt="背景" className="w-full h-auto object-cover block relative z-0" 
+                             onError={(e) => { e.target.src = 'https://placehold.co/1080x720/f3f4f6/c92e27?text=上傳+mainbanner.png'; }} />
+                        
+                        {/* 2. 動畫層：娃娃機夾子 (絕對定位，綁定 animate-swing) */}
+                        <img src="./img/clawmachine.png" alt="娃娃機" className="absolute top-0 left-0 w-full h-full object-cover z-10 animate-swing" 
+                             onError={(e) => { e.target.style.display = 'none'; }} />
+                        
+                        {/* 3. 遮罩層：頂部紅框 (蓋住娃娃機鋼纜上方) */}
+                        <img src="./img/cover.png" alt="遮罩" className="absolute top-0 left-0 w-full h-full object-cover z-20 pointer-events-none" 
+                             onError={(e) => { e.target.style.display = 'none'; }} />
+                    </div>
+                    
                     <form onSubmit={handleStartQuiz} className="p-8 md:p-12 lg:p-8 space-y-6">
                         <div className="space-y-4">
                             <div className="relative">
                                 <Icon name="user" className="absolute left-4 top-4 text-gray-400 w-5 h-5" />
-                                <input required type="text" name="name" value={formData.name} onChange={handleInputChange} className="pl-12 w-full rounded-xl border-gray-200 border-2 p-4 focus:border-[#c92e27] focus:ring-1 focus:ring-[#c92e27] outline-none transition-all" placeholder="您的姓名" />
+                                <input required type="text" name="name" value={formData.name} onChange={handleInputChange} className="pl-12 w-full rounded-xl border-gray-200 border-2 p-4 focus:border-[#c92e27] focus:ring-1 focus:ring-[#c92e27] outline-none transition-all" placeholder="填寫姓名" />
                             </div>
                             <div className="relative">
                                 <Icon name="book" className="absolute left-4 top-4 text-gray-400 w-5 h-5" />
@@ -234,7 +250,7 @@
                             </div>
                             <div className="relative">
                                 <Icon name="phone" className="absolute left-4 top-4 text-gray-400 w-5 h-5" />
-                                <input required type="tel" name="phone" value={formData.phone} onChange={handleInputChange} className="pl-12 w-full rounded-xl border-gray-200 border-2 p-4 focus:border-[#c92e27] focus:ring-1 focus:ring-[#c92e27] outline-none transition-all" placeholder="手機或Email" />
+                                <input required type="tel" name="phone" value={formData.phone} onChange={handleInputChange} className="pl-12 w-full rounded-xl border-gray-200 border-2 p-4 focus:border-[#c92e27] focus:ring-1 focus:ring-[#c92e27] outline-none transition-all" placeholder="手機號碼" />
                             </div>
                         </div>
 
@@ -296,8 +312,6 @@
                 const result = mbtiData[formData.mbti] || mbtiData['INTJ'];
                 return (
                     <div className="w-full bg-white lg:rounded-3xl shadow-none lg:shadow-2xl overflow-hidden animate-fade-in">
-                        
-                        {/* 💡 放寬高度限制：移除 70vh 限制，讓 3:4 的圖片在 iPad 上能完美自然延展 */}
                         <img src={result.imageUrl} alt={formData.mbti} 
                              onError={(e) => { 
                                  if(!e.target.src.includes('placehold.co')) {
@@ -306,7 +320,6 @@
                              }}
                              className="w-full h-auto max-h-[85vh] lg:max-h-[75vh] object-contain bg-white block mx-auto" />
                         
-                        {/* 💡 底部按鈕區 */}
                         <div className="p-6 md:p-10 lg:p-8 space-y-4 bg-white border-t lg:border-t-0 border-gray-50">
                             <a 
                                 href="https://www.104.com.tw/company/au6siqw" 
@@ -326,7 +339,6 @@
             };
 
             return (
-                // 💡 只有 lg (1024px, 電腦版) 才會顯示灰底，手機與 iPad 皆為白底滿版
                 <div className="min-h-[100dvh] bg-white lg:bg-[#f3f4f6] font-sans flex flex-col">
                     {message && (
                         <div className="fixed top-4 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white px-6 py-3 rounded-full z-50 animate-fade-in shadow-xl text-sm font-bold">
@@ -334,7 +346,6 @@
                         </div>
                     )}
                     
-                    {/* 💡 放寬 iPad 的尺寸限制：在 md 尺寸下放到 max-w-2xl(672px)，lg 尺寸收斂為 max-w-md(448px) */}
                     <div className="flex-grow flex flex-col justify-center items-center w-full px-0 lg:px-6 py-0 lg:py-12">
                         <div className="w-full max-w-md md:max-w-2xl lg:max-w-md my-auto">
                             {view === 'form' && renderForm()}
@@ -343,7 +354,6 @@
                         </div>
                     </div>
                     
-                    {/* 頁尾 */}
                     <div className="w-full text-center pb-6 pt-4 bg-white lg:bg-transparent">
                         <p className="text-xs text-gray-400">2026 龍騰文化事業股份有限公司 © 版權所有</p>
                     </div>
