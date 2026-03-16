@@ -229,8 +229,18 @@
                             </div>
                             <div className="relative">
                                 <Icon name="phone" className="absolute left-4 top-4 text-gray-400 w-5 h-5" />
-                                <input required type="text" name="phone" value={formData.phone} onChange={handleInputChange} className="pl-12 w-full rounded-xl border-gray-200 border-2 p-4 focus:border-[#c92e27] focus:ring-1 focus:ring-[#c92e27] outline-none transition-all bg-white" placeholder="手機或Email" />
-                            </div>
+                                <input 
+    required 
+    type="text" 
+    inputMode="email" 
+    autoCapitalize="off" 
+    autoCorrect="off"
+    name="phone" 
+    value={formData.phone} 
+    onChange={handleInputChange} 
+    className="pl-12 w-full rounded-xl border-gray-200 border-2 p-4 focus:border-[#c92e27] focus:ring-1 focus:ring-[#c92e27] outline-none transition-all bg-white" 
+    placeholder="手機號碼或 Email" 
+/>
                             {/* 💡 移除了 MBTI 下拉選單 */}
                         </div>
 
